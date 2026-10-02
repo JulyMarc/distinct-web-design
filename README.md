@@ -14,9 +14,10 @@ How it differs:
   (cream + terracotta serif, black + acid green mono, broadsheet pastiche, mono caps labels…).
 - **Fonts chosen with data**: non-default faces by character, Google Fonts popularity rank and
   Cyrillic coverage (`references/fonts.md`).
-- **Mandatory look-at-it loop**: desktop/mobile screenshots (`scripts/shoot.py`) and two
-  deterministic scanners — `scripts/tells_scan.py` (stdlib) and the vendored
-  avoid-ai-design detector — before anything is called done.
+- **Mandatory look-at-it loop**: desktop/mobile screenshots (`scripts/shoot.py`) and a
+  deterministic, stdlib-only scanner (`scripts/tells_scan.py`): per-line tells plus project-level
+  checks for focus styles, reduced motion, fonts actually loaded, muted-text contrast (WCAG AA,
+  OKLCH-aware) and accent hue — before anything is called done.
 
 ## Install
 Copy or clone into `~/.claude/skills/distinct-web-design/`. For screenshots:
@@ -27,12 +28,13 @@ python3 -m venv .venv && .venv/bin/pip install playwright==1.55.0
 ```
 The browser cache (`~/.cache/ms-playwright`) is shared between projects: if another project
 already has a Playwright build, pin that Playwright version instead of installing a new browser.
-The vendored detector needs Node.js; `tells_scan.py` needs only the Python standard library.
+`tells_scan.py` needs only the Python standard library.
 
 ## Credits
 Tell lists informed by anthropics/skills `frontend-design`, pbakaus/impeccable (Apache-2.0) and
-funboy322/avoid-ai-design (MIT, vendored in `vendor/avoid-ai-design/` with its license).
+funboy322/avoid-ai-design (MIT); `tells_scan.py` is an independent implementation, no code is
+copied from them.
 Theory is paraphrased and attributed; no book text is reproduced.
 
 ## License
-MIT for this repository's own files (see LICENSE); vendored code keeps its own license.
+MIT (see LICENSE).

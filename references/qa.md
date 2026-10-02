@@ -6,11 +6,10 @@ look at rendered pixels.
 ## Commands
 ```bash
 SK=~/.claude/skills/distinct-web-design
-# 1. code-certain tells (exit 2 = P0/P1 present)
-python3 $SK/scripts/tells_scan.py <src-dir-or-file>
-# 1b. second contour: vendored avoid-ai-design detector (67 tells, MIT, pinned v0.4.0)
-node $SK/vendor/avoid-ai-design/detect.mjs <src-dir-or-file>
-#    note: it checks focus styles per HTML file and misses rules in a linked stylesheet (K7)
+# 1. code-certain tells (exit 2 = P0/P1 present). Pass the whole site directory: project-level
+#    checks (focus styles, reduced motion, fonts loaded, muted-text contrast, accent hue) read
+#    HTML and linked stylesheets together.
+python3 $SK/scripts/tells_scan.py <site-dir>
 # 2. screenshots: desktop 1440x900 + mobile 390x844, viewport and full page
 $SK/.venv/bin/python3 $SK/scripts/shoot.py <url-or-index.html> <out-dir>
 ```
@@ -42,8 +41,8 @@ Then open the PNGs (Read tool shows images) and critique. For a dev server, pass
 - After two rounds, if the page is still generic, change the direction rather than polishing.
 
 ## Optional deeper checks
-- `vendor/avoid-ai-design/` also ships its tell catalogue and aesthetic notes (MIT) — read
-  `ai-tells-catalog.md` when a page "feels AI" but the scanners are clean.
+- funboy322/avoid-ai-design (MIT, Node.js): a larger detector and tell catalogue; worth a run
+  when a page "feels AI" but `tells_scan.py` is clean. Install it separately and review it first.
 - `pbakaus/impeccable` (Apache-2.0): its detector is a Rust binary fetched by `npx`; not vendored
   (prebuilt binary unreviewed, source build is heavy). Use only with owner approval.
 - Vercel `web-design-guidelines` for accessibility/performance review.

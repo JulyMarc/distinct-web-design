@@ -55,7 +55,7 @@ with the text blurred?" If not, the direction is too generic.
 
 ### 5. Look at it (mandatory)
 Render screenshots at 1440×900 and 390×844 (full page too) with `scripts/shoot.py`, run
-`scripts/tells_scan.py` and the vendored `vendor/avoid-ai-design/detect.mjs` on the source, then
+`scripts/tells_scan.py` on the site directory, then
 critique with the rubric in `references/qa.md`.
 Fix and re-shoot. **At least two rounds.** Do not claim the design is done without having looked.
 
