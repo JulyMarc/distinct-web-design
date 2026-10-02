@@ -1,10 +1,12 @@
 """Scan front-end source for code-certain AI-design tells (stdlib only).
 
-Usage: python3 tells_scan.py <file-or-dir> [...] [--json]
+Usage: python3 tells_scan.py <file-or-dir> [...] [--json] [--md]
 Exit code 2 if any P0/P1 finding, else 0. Silence an intentional choice on a line with
 `design-ok: <reason>` in a comment (`design-ok: project` anywhere disables project-level checks).
-Pass the whole site directory: project-level checks (focus styles, reduced motion, fonts actually
-loaded, muted-text contrast, accent hue) read HTML and linked stylesheets together.
+Markdown files are skipped in directories unless --md is given (docs describe tells; pass a .md
+file explicitly or use --md for Markdown-content sites). Pass the whole site directory:
+project-level checks (focus styles, reduced motion, fonts actually loaded, muted-text contrast,
+accent hue) read HTML and linked stylesheets together.
 
 P0 = a layperson notices "AI made this"; P1 = a designer/developer notices; P2 = polish.
 Covers only what is certain from code; visual tells need the screenshot review (qa.md).
@@ -18,8 +20,8 @@ import re
 import sys
 from pathlib import Path
 
-EXTS = {".html", ".htm", ".css", ".scss", ".js", ".jsx", ".ts", ".tsx", ".vue", ".svelte", ".astro",
-        ".md", ".mdx"}
+EXTS = {".html", ".htm", ".css", ".scss", ".js", ".jsx", ".ts", ".tsx", ".vue", ".svelte", ".astro"}
+MD_EXTS = {".md", ".mdx"}  # page content on Markdown sites; scanned in directories only with --md
 SKIP_FILES = {"DESIGN.md", "README.md", "CHANGELOG.md"}  # docs describe tells, they are not UI
 SKIP_DIRS = {"node_modules", ".git", "dist", "build", ".next", ".venv", "vendor", "coverage"}
 GENERIC_FACES = {"serif", "sans-serif", "monospace", "system-ui", "ui-sans-serif", "ui-serif",
@@ -92,14 +94,15 @@ RULES: list[tuple[str, str, str, str]] = [
 COMPILED = [(rid, sev, re.compile(rx, re.I), msg) for rid, sev, rx, msg in RULES]
 
 
-def iter_files(paths: list[str]):
+def iter_files(paths: list[str], include_md: bool = False):
+    exts = EXTS | MD_EXTS if include_md else EXTS
     for raw in paths:
         p = Path(raw)
         if p.is_file():
             yield p
         elif p.is_dir():
             for f in p.rglob("*"):
-                if (f.is_file() and f.suffix.lower() in EXTS and not SKIP_DIRS & set(f.parts)
+                if (f.is_file() and f.suffix.lower() in exts and not SKIP_DIRS & set(f.parts)
                         and f.name not in SKIP_FILES):
                     yield f
 
@@ -246,7 +249,7 @@ def main(argv: list[str]) -> int:
     if not paths:
         print(__doc__)
         return 1
-    files = list(iter_files(paths))
+    files = list(iter_files(paths, include_md="--md" in argv))
     findings = [f for p in files for f in scan(p)] + project_checks(files)
     findings.sort(key=lambda f: (f["severity"], f["file"], f["line"]))
     if as_json:

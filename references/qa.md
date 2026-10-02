@@ -9,7 +9,7 @@ SK=~/.claude/skills/distinct-web-design
 # 1. code-certain tells (exit 2 = P0/P1 present). Pass the whole site directory: project-level
 #    checks (focus styles, reduced motion, fonts loaded, muted-text contrast, accent hue) read
 #    HTML and linked stylesheets together.
-python3 $SK/scripts/tells_scan.py <site-dir>
+python3 $SK/scripts/tells_scan.py <site-dir>        # add --md for Markdown-content sites
 # 2. screenshots: desktop 1440x900 + mobile 390x844, viewport and full page
 $SK/.venv/bin/python3 $SK/scripts/shoot.py <url-or-index.html> <out-dir>
 ```
