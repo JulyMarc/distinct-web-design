@@ -35,6 +35,7 @@ Tell lists informed by anthropics/skills `frontend-design`, pbakaus/impeccable (
 funboy322/avoid-ai-design (MIT); `tells_scan.py` is an independent implementation, no code is
 copied from them.
 Theory is paraphrased and attributed; no book text is reproduced.
+`references/style-vocabulary.md` adapts the method and style families from John Hartnup's article and poster-style catalogue (john.hartnup.uk); style names are listed with attribution, his prompt texts are not copied.
 
 ## License
 MIT (see LICENSE).

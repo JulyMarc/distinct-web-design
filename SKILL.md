@@ -14,6 +14,7 @@ Read the references when you reach the step that needs them:
 - `references/theory.md` — typography, hierarchy, grid, colour, spacing rules with numbers.
 - `references/tells.md` — AI tells (obvious and "tasteful"), each with what to do instead.
 - `references/directions.md` — art-direction deck grounded in real traditions.
+- `references/style-vocabulary.md` — method for varying the result and a vocabulary of ~100 named styles (use when no direction fits or the look risks repeating).
 - `references/fonts.md` — non-default typefaces by character, with Cyrillic coverage.
 - `references/qa.md` — screenshot loop, critique rubric, scripts.
 
@@ -29,7 +30,9 @@ clearly — never lorem ipsum, never invented testimonials/logos/metrics.
 
 ### 2. Art direction
 Pick ONE direction from `references/directions.md` (or a real-world reference the user names)
-that fits the brief, and state why it fits this subject. Then write `DESIGN.md` (or a block at the
+that fits the brief, and state why it fits this subject. If none fits or two projects would look
+alike, use `references/style-vocabulary.md` to name the era, movement or medium and generate
+3 candidates from different families. Then write `DESIGN.md` (or a block at the
 top of the page source) with:
 - direction + 1–3 real references (designers, publications, objects) it borrows from;
 - type: families, roles, sizes (a modular scale), measure, line-height;
